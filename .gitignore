@@ -130,3 +130,5 @@ dmypy.json
 
 # folders to ignore
 Data/*
+*.png
+cnn_model
