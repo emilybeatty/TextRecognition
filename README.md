@@ -51,12 +51,12 @@ Cross validation is a good solution as it solves a handful of problems. First, i
 
 I chose to implement a simple Convolutional Neural Network that I found in [6]. I have read up on CNNs and how they are particularly good at object detection and recognition for image data. I spent my time understanding how each layer works.
 
-` Sequential()   
-  Conv2D(32, (3, 3), activation='relu', kernel_initializer='he_uniform')   
-  MaxPooling2D((2, 2))   
-  Flatten()   
-  Dense(100, activation='relu', kernel_initializer='he_uniform')   
-  Dense(10, activation='softmax')`   
+ `Sequential()`   
+ `Conv2D(32, (3, 3), activation='relu', kernel_initializer='he_uniform')`   
+ `MaxPooling2D((2, 2))`   
+ `Flatten()`   
+ `Dense(100, activation='relu', kernel_initializer='he_uniform')`   
+ `Dense(10, activation='softmax')`   
 
 The first layer in the CNN is the Conv2d layer. This layer constructs a kernel by sampling from a uniform distribution with a window size of 3. Sampling allows for randomness which is good for training accuracy [13]. To perform a convolution, which is really cross-correlation, is to slide the 3x3 kernel over the image from left to right. At each kernel location, the kernel is multiplied with pixels at the same location and the sum is stored in the result. Convolutions are used commonly in CV as a means of feature extraction. Although in CV, the kernel weight values are usually deliberate. For example, if I was looking for an "X" in an image, I might use a kernel like this:
 
