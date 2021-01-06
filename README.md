@@ -6,7 +6,7 @@
 
 2. Navigate to /home/learner/EmilysProject/TextRecognition
 
-3. Run main python file instructions one at a time on the command line: *I suggest executing only a and b*. I have provided c, d, e if you would like to run those as well.
+3. Run main python file instructions one at a time on the command line: *I suggest executing only i and ii*. I have provided iii, iv, and v if you would like to run those as well.
 
     1. To run my pre-trained model with the MNIST Test data do: `python3 Main.py 1`
 
