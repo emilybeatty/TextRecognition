@@ -2,32 +2,25 @@
 
 ## RUNNING INSTRUCTIONS:
 
-1.     Open terminal
+1. Open terminal
 
-2.     Navigate to /home/learner/EmilysProject/TextRecognition
+2. Navigate to /home/learner/EmilysProject/TextRecognition
 
-3.     Run main python file instructions: I suggest executing only a and b. I have provided c, d, e if you would like to run those as well.
+3. Run main python file instructions one at a time on the command line: *I suggest executing only a and b*. I have provided c, d, e if you would like to run those as well.
 
-a.     To run my pre-trained model with the MNIST Test data do:
+    1. To run my pre-trained model with the MNIST Test data do: `python3 Main.py 1`
 
-$ python3 Main.py 1
+    2. To run my pre-trained model with my handwritten Test data do: `python3 Main.py 2`
 
-b.     To run my pre-trained model with my handwritten Test data do:
+    3. To retrain model and evaluate with MNIST Test data do:`python3 Main.py 3`
 
-$ python3 Main.py 2
+    4. To run Kfold cross validation and see results do (NOTE: this one takes a while to execute): `python3 Main.py 4`
 
-c.     To retrain model and evaluate with MNIST Test data do:
+    5. To create and save bar chart for category distribution do: `python3 Main.py 5`
 
-$ python3 Main.py 3
+## GITHUB
 
-d.     To run Kfold cross validation and see results do (NOTE: this one takes a while to execute):
-
-$ python3 Main.py 4
-
-e.     To create and save bar chart for category distribution do:
-
-$ python3 Main.py 5
-
+The repo is in Github and is a private repo as of now. For most of the development, Jupyter Notebook was used, so all development commits are focused on the Main.ipynb file. The file was converted to a regular python file (Main.py) so that it could be executed from the commandline. I will provide access to the Technical Point of Contact through email.  
 
 ## REPORT
 
@@ -58,18 +51,18 @@ Cross validation is a good solution as it solves a handful of problems. First, i
 
 I chose to implement a simple Convolutional Neural Network that I found in [6]. I have read up on CNNs and how they are particularly good at object detection and recognition for image data. I spent my time understanding how each layer works.
 
-` Sequential()
-  Conv2D(32, (3, 3), activation='relu', kernel_initializer='he_uniform')
-  MaxPooling2D((2, 2))
-  Flatten()
-  Dense(100, activation='relu', kernel_initializer='he_uniform')
-  Dense(10, activation='softmax')`
+` Sequential()   
+  Conv2D(32, (3, 3), activation='relu', kernel_initializer='he_uniform')   
+  MaxPooling2D((2, 2))   
+  Flatten()   
+  Dense(100, activation='relu', kernel_initializer='he_uniform')   
+  Dense(10, activation='softmax')`   
 
 The first layer in the CNN is the Conv2d layer. This layer constructs a kernel by sampling from a uniform distribution with a window size of 3. Sampling allows for randomness which is good for training accuracy [13]. To perform a convolution, which is really cross-correlation, is to slide the 3x3 kernel over the image from left to right. At each kernel location, the kernel is multiplied with pixels at the same location and the sum is stored in the result. Convolutions are used commonly in CV as a means of feature extraction. Although in CV, the kernel weight values are usually deliberate. For example, if I was looking for an "X" in an image, I might use a kernel like this:
 
-[[1 -1 1],
- [-1 1 -1],
- [1 -1 1]]
+[[1 -1 1],   
+ [-1 1 -1],   
+ [1 -1 1]]   
 
 
 In this problem, the weights must be learned. I wanted to understand how the weights are learned and the purpose of 32 filters in the Conv2d.
@@ -80,7 +73,7 @@ The activation chosen is ReLu - a simple non-linear function. Anything less than
 
 The next layer is max pooling. Pooling in some ways is like convolution, there is a 2x2 kernel that slides over each feature map. They differ in that in max pooling, the maximum value of the feature map in the 2x2 space is taken and placed in the result and that it is nonlinear. One benefit to this method is that it reduces the size of the output, while preserving the most distinct features. Another benefit is that it makes the model invariant to translation [14]. Translation invariance allows features to be moved up/down, left/right and the model will still be able to detect the feature. So, when the max value is taken, it changes where the precise location of where that feature was detected in the image, which causes the desired invariance [14].
 
-The next layer is Flatten. The layer's function reminds me a lot of NumPy reshape function. It takes in an input (13, 13, 32), note that it is 13 and not 16 due to the convolution operation and the option to not add padding in conv2d layer, and flattens it to a 1D C-style array of size 13*13*32.
+The next layer is Flatten. The layer's function reminds me a lot of NumPy reshape function. It takes in an input (13, 13, 32), note that it is 13 and not 16 due to the convolution operation and the option to not add padding in conv2d layer, and flattens it to a 1D C-style array of size 13\*13\*32.
 
 The last two layers are Dense layers. At a high level, they reduce the dimensionality from 5408 to 100 to 10. It is important that the model's output layer (last layer) end with only 10 neurons since there are 10 possible number categories the image could be. The softmax function is suitable as the activation in the last layer since it converts the vector values into probabilities that sum to 1. The highest probability category is what the model selects as the number that the image represents. Although, softmax is most important as it uses cross-entropy loss. The loss is calculated using the softmax probability for the correct category which will quantify how much confidence there is in the prediction [15].
 
@@ -102,19 +95,19 @@ Another example is the CNN. Using Keras was good and bad. It was good because th
 
 
 ##  REFERENCES:
-[1]Distance Transform Paper, URL: https://www.cse.sc.edu/~songwang/document/wacv15b.pdf
-[2]Textract software, URL: https://aws.amazon.com/textract/
-[3]Image Recognition Based on Deep Learning, URL: https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=7382560
-[4]The MNIST Database of handwritten digits, URL: http://yann.lecun.com/exdb/mnist/
-[5]Why normalize images for deep learning, URL: https://stats.stackexchange.com/questions/211436/why-normalize-images-by-subtracting-datasets-image-mean-instead-of-the-current
-[6] How to develop a CNN for handwriting recognition, URL: https://machinelearningmastery.com/how-to-develop-a-convolutional-neural-network-from-scratch-for-mnist-handwritten-digit-classification/
-[7] How to manually scale image pixel data for deep learning, URL: https://machinelearningmastery.com/how-to-manually-scale-image-pixel-data-for-deep-learning/
-[8] Cross-Validation, URL: https://scikit-learn.org/stable/modules/cross\_validation.html
-[9] Why do you need non-linear activation functions? URL: https://www.coursera.org/lecture/neural-networks-deep-learning/why-do-you-need-non-linear-activation-functions-OASKH
-[10] Simple MNIST Convnet, URL: https://keras.io/examples/vision/mnist\_convnet/
-[11]Convolutional Neural Network, URL: https://towardsdatascience.com/convolutional-neural-network-ii-a11303f807dc
-[12] Keras Conv2d and Convolutional Layers, URL: https://www.pyimagesearch.com/2018/12/31/keras-conv2d-and-convolutional-layers/
-[13] The effects of weight initialization on neural nets, URL: https://wandb.ai/site/articles/the-effects-of-weight-initialization-on-neural-nets
-[14] Pooling Layers, URL: https://machinelearningmastery.com/pooling-layers-for-convolutional-neural-networks/
-[15] Deep AI, URL: https://deepai.org/machine-learning-glossary-and-terms/softmax-layer
-[16] Cross-Entropy Loss, URL: https://victorzhou.com/blog/intro-to-cnns-part-1/#52-cross-entropy-loss
+[1]Distance Transform Paper, URL: https://www.cse.sc.edu/~songwang/document/wacv15b.pdf   
+[2]Textract software, URL: https://aws.amazon.com/textract/   
+[3]Image Recognition Based on Deep Learning, URL: https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=7382560   
+[4]The MNIST Database of handwritten digits, URL: http://yann.lecun.com/exdb/mnist/   
+[5]Why normalize images for deep learning, URL: https://stats.stackexchange.com/questions/211436/why-normalize-images-by-subtracting-datasets-image-mean-instead-of-the-current   
+[6] How to develop a CNN for handwriting recognition, URL: https://machinelearningmastery.com/how-to-develop-a-convolutional-neural-network-from-scratch-for-mnist-handwritten-digit-classification/   
+[7] How to manually scale image pixel data for deep learning, URL: https://machinelearningmastery.com/how-to-manually-scale-image-pixel-data-for-deep-learning/   
+[8] Cross-Validation, URL: https://scikit-learn.org/stable/modules/cross\_validation.html   
+[9] Why do you need non-linear activation functions? URL: https://www.coursera.org/lecture/neural-networks-deep-learning/why-do-you-need-non-linear-activation-functions-OASKH   
+[10] Simple MNIST Convnet, URL: https://keras.io/examples/vision/mnist\_convnet/   
+[11]Convolutional Neural Network, URL: https://towardsdatascience.com/convolutional-neural-network-ii-a11303f807dc   
+[12] Keras Conv2d and Convolutional Layers, URL: https://www.pyimagesearch.com/2018/12/31/keras-conv2d-and-convolutional-layers/   
+[13] The effects of weight initialization on neural nets, URL: https://wandb.ai/site/articles/the-effects-of-weight-initialization-on-neural-nets   
+[14] Pooling Layers, URL: https://machinelearningmastery.com/pooling-layers-for-convolutional-neural-networks/   
+[15] Deep AI, URL: https://deepai.org/machine-learning-glossary-and-terms/softmax-layer   
+[16] Cross-Entropy Loss, URL: https://victorzhou.com/blog/intro-to-cnns-part-1/#52-cross-entropy-loss   
